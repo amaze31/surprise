@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected Page</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff7eb3, #ff758c); /* Pinkish gradient background */
+            color: #333;
+            flex-direction: column;
+            overflow: hidden; /* Hide overflow for floating text */
+            position: relative; /* For footer positioning */
+        }
+
+        /* Container for password page */
+        .password-container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            text-align: center;
+            width: 300px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        /* Heading */
+        .password-container h1 {
+            margin-bottom: 1rem;
+            color: #ff6f61;
+            font-size: 1.5rem;
+        }
+
+        /* Input Styling */
+        .password-container input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            outline: none;
+            text-align: center;
+        }
+
+        /* Button Styling */
+        .password-container button {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6f61;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        /* Button Hover Effect */
+        .password-container button:hover {
+            background-color: #ff3d33;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content Styling */
+        #main-content {
+            display: none; /* Initially hidden */
+            position: relative;
+            text-align: center;
+            color: #333;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; /* Hide overflow for floating text */
+        }
+
+        /* Animated Text Styling */
+        .animated-text {
+          top : 50%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0); /* Center horizontally */
+            font-size: 3em; /* Increased font size */
+            font-weight: bold;
+            color: #ff3e96; /* Text color */
+            opacity: 1; /* Start as fully visible */
+            white-space: nowrap; /* Prevent text wrapping */
+            animation: floatUp 2s linear forwards; /* Animation */
+        }
+
+        /* Keyframes for floatUp animation */
+        @keyframes floatUp {
+            0% {
+                opacity: 1; /* Fully visible */
+                transform: translate(-50%, 0) scale(1); /* Center position */
+            }
+            50% {
+                opacity: 0.8; /* Start fading */
+                transform: translate(-50%, -100px) scale(0.6); /* Move up and reduce size */
+            }
+            100% {
+                opacity: 0; /* Fully disappear */
+                transform: translate(-50%, -150px) scale(0.3); /* Move higher and shrink further */
+            }
+        }
+
+        /* Footer Text Styling */
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1rem;
+            color: #fff;
+            font-weight: bold;
+            animation: fadeInOut 4s ease-in-out infinite;
+        }
+
+        /* Footer Animation */
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Password Page -->
+    <div class="password-container" id="password-page">
+        <h1>Enter Password</h1>
+        <input type="password" id="password-input" placeholder="Password">
+        <button onclick="checkPassword()">Submit</button>
+        <div class="error-message" id="error-message">Incorrect password. Please try again.</div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        
+    </div>
+
+    <!-- Footer Text -->
+    <div class="footer-text">Made By Naitik Tiwari With ❤️</div>
+
+    <script>
+        let counter = 0; // Initialize counter for the number
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            const errorMessage = document.getElementById('error-message');
+
+            // Check if password is correct
+            if (password === 'naitik') {
+                document.getElementById('password-page').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                startAnimation(); // Start the animation
+            } else {
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 2000); // Error message disappears after 2 seconds
+            }
+        }
+
+        function createFloatingText() {
+            counter++; // Increment the counter
+            // Create a new text element
+            const textElement = document.createElement('div');
+            textElement.textContent = `opppppppppppppppp ${counter} times`; // Append counter with "times"
+            textElement.className = 'animated-text';
+
+            // Append to main content
+            document.getElementById('main-content').appendChild(textElement);
+
+            // Remove the text element after animation completes (2 seconds)
+            setTimeout(() => {
+                textElement.remove();
+            }, 2000);
+        }
+
+        function startAnimation() {
+            // Call createFloatingText every half second
+            setInterval(createFloatingText, 500);
+        }
+    </script>
+</body>
+</html>
